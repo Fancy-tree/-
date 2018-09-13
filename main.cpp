@@ -3,6 +3,7 @@
 #include "unistd.h"
 
 int IsRoll = 1;//是否滚动
+int IsRollSG = 0;//是否滚动学生年级
 
 
 void SoftInformation();
@@ -111,5 +112,52 @@ void RollSet()
         }
         
     }  
+    
+}
+
+void ChooseWhatToRoll()
+{
+    
+    double n=100;
+    while(n!=0){
+        printf("ChooseWhatToRoll:\n");
+        printf(" 1.Choose roll student grade\n");//开启滚动学生年级
+        printf(" 2.Cancel roll student grade\n");//关闭滚动学生年级
+        printf(" 0.Exit ChooseWhatToRoll\n");
+        
+        printf("Student's name and ID are defaulted output,you can't change it\n");
+        
+        if(IsRollSG == 0) printf("Now rolling: student's name student's ID \n");
+        else printf("Now rolling: student's name student's ID student grade\n");
+        
+        printf("Please choose your number: ");
+        std::cin>>n;
+        while(n!=1 && n!=2 && n!=0){
+            printf("Illegal number, try again ");
+            std::cin>>n;
+        }
+        printf("OK\n");
+        
+        if(n==1){
+            if(IsRollSG == 1)printf("Student grade is already rolling\n");
+            else {
+                IsRollSG = 1;
+                printf("Student grade now rolling\n");
+            }    
+        }else if(n==2){   
+            if(IsRollSG == 0)printf("Student grade rolling is already canceled\n");
+            else {
+                IsRollSG = 0;
+                printf("Student grade rolling now canceled\n");
+            }
+            
+        }else if(n==0){   
+            break;
+                
+        }else {   
+            printf("Illegal number?\n");
+        }
+        
+    }
     
 }
