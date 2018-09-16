@@ -31,18 +31,18 @@ int main()
 
 void SoftInformation()
 {
-    printf("This is a Luky draw program\n");
+    printf("\033[;30;5mThis is a Luky draw program\033[0m\n");
 }
 
 void Set()
 {
-    char n[10]="100";//即使用户输入了奇怪的字符，程序仍能正常运行
+    char n[50]="100";//即使用户输入了奇怪的字符，程序仍能正常运行
     while(n!=0){
-        printf("Set:\n");
+        printf("\033[;36;5mSet:\033[0m\n");
         printf(" 1.Enter the lottery information\n");//输入抽奖人信息
         printf(" 2.Prize setting\n");//奖项设置
         printf(" 3.Candidate information scrolling\n");//候选人信息滚动
-        printf(" 4.Sweepstakes Information\n");//抽奖项目信息
+        printf(" 4.Sweepstakes Information\n");//抽奖项目信息,主题
         printf(" 0.Exit Set\n");
         printf("Please choose your number: ");
         std::cin>>n;
@@ -77,9 +77,9 @@ void Set()
 
 void RollSet()
 {
-    char n[10]="100";
+    char n[50]="100";
     while(n!=0){
-        printf("RollSet:\n");
+        printf("\033[;36;5mRollSet:\033[0m\n");
         printf(" 1.Open candidate information roll\n");//开启滚动
         printf(" 2.Close candidate information roll\n");//关闭滚动
         printf(" 3.Choose what candidate information to roll\n");//选择会被滚动的信息
@@ -121,9 +121,9 @@ void RollSet()
 void ChooseWhatToRoll()
 {
     
-    char n[10]="100";
+    char n[50]="100";
     while(n!=0){
-        printf("ChooseWhatToRoll:\n");
+        printf("\033[;36;5mChooseWhatToRoll:\033[0m\n");
         printf(" 1.Choose roll student grade\n");//开启滚动学生年级
         printf(" 2.Cancel roll student grade\n");//关闭滚动学生年级
         printf(" 0.Exit ChooseWhatToRoll\n");
@@ -168,7 +168,7 @@ void ChooseWhatToRoll()
 
 int GetYesOrNo (char* ask)
 {
-    char answer[10];
+    char answer[50];
     while (1){
         printf("%s",ask);
         std::cin>>answer;
