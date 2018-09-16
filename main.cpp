@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "iostream"
 #include "unistd.h"
+#include <string.h>
 
 int IsRoll = 1;//是否滚动
 int IsRollSG = 0;//是否滚动学生年级
@@ -10,31 +11,32 @@ void SoftInformation();
 void Set();
 void RollSet();
 void ChooseWhatToRoll();
+int GetYesOrNo (char* ask);
 int main()
 {
     SoftInformation();
     int n=100;
     while(n!=0){
         Set();
-        Lottery();
-        Search();
+      //  Lottery();
+      //  Search();
         
-        if(YesOrNo("Do you want to try again? (y/n) ")==0)//待确定
+        if(GetYesOrNo("Do you want to try again? (y/n) ")==0)
             break;
        
     }
-    
+    printf("End\n");
 }
 
 
 void SoftInformation()
 {
-    printf("This is a Luky draw program");
+    printf("This is a Luky draw program\n");
 }
 
 void Set()
 {
-    double n=100;//double 使用户输入浮点数时不会立即结束程序
+    char n[10]="100";//即使用户输入了奇怪的字符，程序仍能正常运行
     while(n!=0){
         printf("Set:\n");
         printf(" 1.Enter the lottery information\n");//输入抽奖人信息
@@ -44,25 +46,25 @@ void Set()
         printf(" 0.Exit Set\n");
         printf("Please choose your number: ");
         std::cin>>n;
-        while(n!=1 && n!=2 && n!=3 && n!=4 && n!=0){
+        while(strcmp (n,"1") && strcmp (n,"2") && strcmp (n,"3") && strcmp (n,"4") && strcmp (n,"0")){
             printf("Illegal number, try again ");
             std::cin>>n;
-        }
+          }
         printf("OK\n");
         
-        if(n==1){
+        if(strcmp (n,"1")==0){
             //抽奖人信息函数
             
-        }else if(n==2){   
+        }else if(strcmp (n,"2")==0){   
             //奖项设置函数
             
-        }else if(n==3){   
+        }else if(strcmp (n,"3")==0){   
             RollSet();
             
-        }else if(n==4){   
+        }else if(strcmp (n,"4")==0){   
             //更改主题（抽奖项目信息）函数
             
-        }else if(n==0){   
+        }else if(strcmp (n,"0")==0){   
             break;
             
         }else {   
@@ -75,7 +77,7 @@ void Set()
 
 void RollSet()
 {
-    double n=100;
+    char n[10]="100";
     while(n!=0){
         printf("RollSet:\n");
         printf(" 1.Open candidate information roll\n");//开启滚动
@@ -84,28 +86,28 @@ void RollSet()
         printf(" 0.Exit RollSet\n");
         printf("Please choose your number: ");
         std::cin>>n;
-        while(n!=1 && n!=2 && n!=3 && n!=0){
+        while(strcmp (n,"1") && strcmp (n,"2") && strcmp (n,"3")  && strcmp (n,"0")){
             printf("Illegal number, try again ");
             std::cin>>n;
-        }
+          }
         printf("OK\n");
-        if(n==1){
+        if(strcmp (n,"1")==0){
             if(IsRoll == 1)printf("Roll is already opened\n");
             else {
                 IsRoll = 1;
                 printf("Roll now opened\n");
             }    
-        }else if(n==2){   
+        }else if(strcmp (n,"2")==0){   
             if(IsRoll == 0)printf("Roll is already closed\n");
             else {
                 IsRoll = 0;
                 printf("Roll now closed\n");
             }
             
-        }else if(n==3){   
+        }else if(strcmp (n,"3")==0){   
             ChooseWhatToRoll();
                 
-        }else if(n==0){   
+        }else if(strcmp (n,"0")==0){   
             break;
                 
         }else {   
@@ -119,7 +121,7 @@ void RollSet()
 void ChooseWhatToRoll()
 {
     
-    double n=100;
+    char n[10]="100";
     while(n!=0){
         printf("ChooseWhatToRoll:\n");
         printf(" 1.Choose roll student grade\n");//开启滚动学生年级
@@ -133,26 +135,26 @@ void ChooseWhatToRoll()
         
         printf("Please choose your number: ");
         std::cin>>n;
-        while(n!=1 && n!=2 && n!=0){
+        while(strcmp (n,"1") && strcmp (n,"2")  && strcmp (n,"0")){
             printf("Illegal number, try again ");
             std::cin>>n;
-        }
+          }
         printf("OK\n");
         
-        if(n==1){
+        if(strcmp (n,"1")==0){
             if(IsRollSG == 1)printf("Student grade is already rolling\n");
             else {
                 IsRollSG = 1;
                 printf("Student grade now rolling\n");
             }    
-        }else if(n==2){   
+        }else if(strcmp (n,"1")==0){   
             if(IsRollSG == 0)printf("Student grade rolling is already canceled\n");
             else {
                 IsRollSG = 0;
                 printf("Student grade rolling now canceled\n");
             }
             
-        }else if(n==0){   
+        }else if(strcmp (n,"0")==0){   
             break;
                 
         }else {   
@@ -162,3 +164,20 @@ void ChooseWhatToRoll()
     }
     
 }
+
+
+int GetYesOrNo (char* ask)
+{
+    char answer[10];
+    while (1){
+        printf("%s",ask);
+        std::cin>>answer;
+	//printf("%s", answer);
+        if (strcmp (answer, "yes") && strcmp (answer, "no") && strcmp (answer, "y") && strcmp (answer, "n")){
+            printf ("Please answer y(yes) or n(no).\n"); 
+            continue;
+        }    
+        break;
+    }
+    return ( !strcmp(answer, "yes") || !strcmp(answer, "y") );//yes return 1
+}	
