@@ -9,6 +9,7 @@ int IsRollSG = 0;//是否滚动学生年级
 void SoftInformation();
 void Set();
 void RollSet();
+void ChooseWhatToRoll();
 int main()
 {
     SoftInformation();
