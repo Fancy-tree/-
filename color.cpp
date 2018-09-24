@@ -19,7 +19,6 @@ int main(int argc,char **argv)
 	printf("\033[45;37;5m 45;37; hello world\033[0m\n");
 	printf("\033[46;37;5m 46;37; hello world\033[0m\n");
 	printf("\033[47;37;5m 47;37; hello world\033[0m\n");
-
- 
+	
     return 0;
 }
