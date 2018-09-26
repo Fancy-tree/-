@@ -17,8 +17,6 @@ int main(int argc,const char *argv[])
 struct Student stus[n];
 
 
-
- 
 FILE *fp;
     for(i=1;i<=n;i++)
 {

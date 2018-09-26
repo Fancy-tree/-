@@ -17,8 +17,10 @@ int main ()
     return 0;
 }
 
-void InputTime(void)
-{
+
+void InputTime(void)
+
+{
     ofstream OutFile("Time.txt"); //利用构造函数创建txt文本，并且打开该文本
     time_t timep; 
     time (&timep); 
