@@ -23,7 +23,7 @@ void shuru()//将文件的数据读入到结构体数组中
 	int count=0;
 	while(infile.get(ch))//把文件中的数据进行分块（依据空格分隔）
 	{
-		if(ch=='')count++;
+		if(ch==‘’)count++;
 		if(count%3==1)
 		p[count/3].name+=ch;
 		if(count%3==2)

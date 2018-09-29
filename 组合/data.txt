@@ -1,3 +1,10 @@
-1 a a 19 a
-2 b b 34 b
-3 c c 22 c
+1 apple 女 17 a
+2 banana 男 18 b
+3 cat 女 17 c
+4 dog 女 19 d
+5 egg 男 17 e
+6 free 女 18 f
+7 good 女 17 g
+8 happy 男 19 h
+9 idea 女 17 i
+10 j 女 17 j

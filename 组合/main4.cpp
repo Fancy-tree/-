@@ -30,21 +30,31 @@ typedef struct
 }Prize;
 
 
-int initial=0;//判断是否遵从初始设置
-int group[]={1,0,0,0,0};	//抽奖默认设置选择第一组
+Prize pri[6]=
+   {
+        {"阳光奖","一等奖","二等奖","三等奖","","",1,2,3,0,0},
+        {"最佳气质奖","一等奖","二等奖","三等奖","","",1,2,3,0,0},
+        {"最搞笑人物奖","一等奖","二等奖","三等奖","","",1,2,3,0,0},
+        {"最暖笑容奖","一等奖","二等奖","三等奖","","",1,2,3,0,0},
+        {"最奋斗忘我奖","一等奖","二等奖","三等奖","","",1,2,3,0,0},
+	{"","一等奖","二等奖","三等奖","","",1,2,3,0,0},
+   };
 
-void PrizeSet(Prize pri[],int group[]);
+int initial=0;//判断是否遵从初始设置
+int group[]={1,0,0,0,0,0};	//抽奖默认设置选择第一组
+
+void PrizeSet(int group[]);
 void PrizeInfornation();
-void PrizeNumber(Prize pri[],int group[]);
-void single(Prize pri[],int group[]);
-void multiple(Prize pri[],int group[]);
-void tacitiy(Prize pri[]);
-void chooseNumber(Prize pri[],int num,int group[]);
+void PrizeNumber(int group[]);
+void single(int group[]);
+void multiple(int group[]);
+void tacitiy();
+void chooseNumber(int num,int group[]);
     
 //**************************************范涵之 滚动函数
 
 int ms = 100; //近似延迟的毫秒数
-int numdataline = 10;//候选人数
+int numdataline = 9;//候选人数
 
 int IsRoll = 1;//是否滚动
 int IsSex =0;//是否滚动学生性别
@@ -56,6 +66,7 @@ typedef struct {
 	char  sex[100]; //性别
 	char  nj[100];  //年级
 	char grjj[1000];//简介
+	int IsUsed;  //是否已抽中奖
 
 }Student2;
 
@@ -87,6 +98,7 @@ int main()
 {
     SoftInformation(); //抽奖程序介绍
     int n=100;
+	
     while(n!=0){
         Set();      //设置函数
         Lottery();  //抽奖函数
@@ -162,16 +174,9 @@ void Set()
             
         }else if(strcmp (n,"2")==0){   //肖平 奖项设置函数
        
-   		Prize pri[5]=
-   		{
-        		{"阳光奖","一等奖","二等奖","三等奖","","",1,2,3,0,0},
-        		{"最佳气质奖","一等奖","二等奖","三等奖","","",1,2,3,0,0},
-        		{"最搞笑人物奖","一等奖","二等奖","三等奖","","",1,2,3,0,0},
-        		{"最暖笑容奖","一等奖","二等奖","三等奖","","",1,2,3,0,0},
-        		{"最奋斗忘我奖","一等奖","二等奖","三等奖","","",1,2,3,0,0},
-   		};
+   		
   
-   		PrizeSet(pri,group);//奖项设置函数
+   		PrizeSet(group);//奖项设置函数
    
             
         }else if(strcmp (n,"3")==0){   
@@ -316,17 +321,74 @@ int GetYesOrNo (char ask[])
 
 void Lottery()  
 {
-	printf("\n");
-	printf("抽奖开始\n");
-							//滚动函数应用
-	Student2 students[numdataline];
-
-	GetAllData(students);
-   	Roll(students);
-							//滚动函数应用结束
-
- 	InputTime();				//时间存取函数应用，读取当前时间存入文件 
+	InputTime();				//时间存取函数应用，读取当前时间存入文件 
 	printf("已保存当前时间\n");
+
+	printf("\n");
+	Student2 students[numdataline];	
+							
+
+	printf("抽奖开始\n");
+	int gro;
+	for(int i=0;i<6;i++)if(group[i]==1)gro=i;
+	printf("%s\n",pri[gro].Name);
+	fflush(stdout);
+	
+	GetAllData(students);
+	if(pri[gro].Pone!='\0'){
+		printf("%s\n",pri[gro].Pone);
+		fflush(stdout);
+		for(int i=0;i<pri[gro].None;i++){
+			printf("第%d位获奖者\n",i+1);
+			fflush(stdout);
+			Roll(students);
+			printf("\n");	
+		}
+	}
+	
+	if(pri[gro].Ptwo!='\0'){
+		printf("%s\n",pri[gro].Ptwo);
+		fflush(stdout);
+		for(int i=0;i<pri[gro].Ntwo;i++){
+			printf("第%d位获奖者\n",i+1);
+			fflush(stdout);
+			Roll(students);	
+			printf("\n");
+		}
+	}
+	if(pri[gro].Pthree!='\0'){
+		printf("%s\n",pri[gro].Pthree);
+		fflush(stdout);
+		for(int i=0;i<pri[gro].Nthree;i++){
+			printf("第%d位获奖者\n",i+1);
+			fflush(stdout);
+			Roll(students);	
+			printf("\n");
+		}
+	}
+	if(pri[gro].Pfour!='\0'){
+		printf("%s\n",pri[gro].Pfour);
+		fflush(stdout);
+		for(int i=0;i<pri[gro].Nfour;i++){
+			printf("第%d位获奖者\n",i+1);
+			fflush(stdout);
+			Roll(students);	
+			printf("\n");
+		}
+	}
+	if(pri[gro].Pfive!='\0'){
+		printf("%s\n",pri[gro].Pfive);
+		fflush(stdout);
+		for(int i=0;i<pri[gro].Nfive;i++){
+			printf("第%d位获奖者\n",i+1);
+			fflush(stdout);
+			Roll(students);
+			printf("\n");	
+		}
+	}			
+   				
+							
+ 	
 
 }
 
@@ -341,10 +403,10 @@ void Search()
 
 
 //*********************************************************************肖平 奖项设置函数
-void PrizeSet(Prize pri[],int group[])
+void PrizeSet(int group[])
 {
     //PrizeInfornation();//抽奖信息介绍
-    PrizeNumber(pri,group);//奖项组数和分配人数设置函数
+    PrizeNumber(group);//奖项组数和分配人数设置函数
 }
 
 /*
@@ -354,11 +416,12 @@ void PrizeSet(Prize pri[],int group[])
  * 第三组为最搞笑人物奖
  * 第四组为最暖笑容奖
  * 第五组为最奋斗忘我奖
+ * 第六组为自定义奖名
  */
 
 
 
-void PrizeNumber(Prize pri[],int group[])
+void PrizeNumber(int group[])
 {
     int n;
     
@@ -366,83 +429,157 @@ void PrizeNumber(Prize pri[],int group[])
     scanf("%d",&n);
     switch(n)
     {
-        case 1: single(pri,group); break;//单组函数;
+        case 1: single(group); break;//单组函数;
 
-        default:  tacitiy(pri);//默认初始设置函数;
+        default:  tacitiy();//默认初始设置函数;
     }
 }
 
 //这里是单组抽奖的设置函数（包括设置奖项为那一组和该组奖项人员分配）
-void single(Prize pri[],int group[])
+void single(int group[])
 {
     int n;
     //请选择你想要的奖项名称
     printf("你选择了单组抽奖。\n");
-    printf("第一组为阳光奖\n第二组为最佳气质奖\n第三组为最搞笑人物奖\n第四组为最暖笑容奖\n第五组为最奋斗忘我奖\n\n");
+    printf("第一组为阳光奖\n第二组为最佳气质奖\n第三组为最搞笑人物奖\n第四组为最暖笑容奖\n第五组为最奋斗忘我奖\n第六组为自定义奖名\n\n");
     printf("你想要设置的奖项为：");
     scanf("%d",&n);
-    chooseNumber(pri,n,group);
+    chooseNumber(n,group);
 
 }
 
 
 
 //这个函数是对于用户选择的抽奖项目进行人员分配。默认设置为（一二三等奖，并为1,2,3人）
-void chooseNumber(Prize pri[],int num,int group[])
+void chooseNumber(int num,int group[])
 {
     char question;
     int OneOrTwo;
-    group[num-1]='1';
+    for(int i=0;i<6;i++)group[i]=0;
+    group[num-1]=1;
+	
         
-    
-    printf("这里是对奖品个数和人员直接的分配。\n");
-    printf("你正在设置第 %d 组的奖项数量和人员分配\n",num);
-    //奖品个数
-    printf("我们的奖品默认分为一等奖一名，二等奖两名，三等奖三名。\n");
-    printf("除了一二三等奖以外，你还可以设置两个奖项名称，如若不设置则为默认。你是否要设置？\n\n");
-    do{  
-        printf("请回答 y or n(大小写皆可）\n");
-        scanf("%s",&question);
+    if(num==6){
+	 printf("第六组，自定义设置\n");
+    	 printf("请输入 第六组组名: \n");
+	 scanf("%s",pri[5].Name);
+    	 printf("%s",pri[5].Name);
+
+  	 printf("我们的奖品默认分为一等奖一名，二等奖两名，三等奖三名。\n");
+	 printf("是否要改变默认奖项名称？(名字为空意味着删除奖项)\n\n");
+  	 do{  
+       	 printf("请回答 y or n(大小写皆可）\n");
+       	 scanf("%s",&question);
         
-    }while(question!='Y'&&question!='y'&&question!='N'&&question!='n');
-    
-    if(question=='y'||question=='Y'){
-        initial++;
-        printf("你还想要设置一个还是两个奖项？(可以输入1或者2): ");
-        scanf("%d",&OneOrTwo);
-       if(OneOrTwo==1){
-            printf("请输入你想要设置奖项的名字: ");
-            scanf("%s",&pri[num-1].Pfour);
-            printf("%s",pri[num-1].Pfour);
-            printf("请输入该奖项的人数：");
-            scanf("%d",&pri[num-1].Nfour);
-       }else{
-            initial++;
-            printf("请输入你想要设置奖项的第一个名字： ");
-            scanf("%s",&pri[num-1].Pfour);
-            printf("请输入该奖项的人数：");
-            scanf("%d",&pri[num-1].Nfour);
-            printf("请输入你想要设置奖项的第二个名字： ");
-            scanf("%s",&pri[num-1].Pfive);
-            printf("请输入该奖项的人数：");
-            scanf("%d",&pri[num-1].Nfive);
-       }
-    }
-    printf("你是否要设置该组奖项的一二三等奖的人数？(一等奖人数大于二等奖大于三等奖）\n\n ");
-    do{  
-             printf("请回答 y or n(大小写皆可）\n");
-             scanf("%s",&question);
-             
-    }while(question!='Y'&&question!='y'&&question!='N'&&question!='n');//只要开头字母符合就行了
-    if(question=='y'||question=='Y'){
-        printf("请输入一等奖人数：");
-        scanf("%d",&pri[num-1].None);
-        printf("二等奖人数为：");
-        scanf("%d",&pri[num-1].Ntwo);
-        printf("三等奖人数为：");
-        scanf("%d",&pri[num-1].Nthree);
-    }
-    
+   	 }while(question!='Y'&&question!='y'&&question!='N'&&question!='n');
+	 if(question=='y'||question=='Y'){
+		 printf("改变“一等奖”名称: ");
+		 scanf("%s",pri[5].Pone);
+             printf("%s",pri[5].Pone);
+		printf("改变“二等奖”名称: ");
+		 scanf("%s",pri[5].Ptwo);
+             printf("%s",pri[5].Ptwo);
+		printf("改变“三等奖”名称: ");
+		 scanf("%s",pri[5].Pthree);
+             printf("%s",pri[5].Pthree);
+	  }
+		 printf("除了一二三等奖以外，你还可以设置两个奖项名称，如若不设置则为默认。你是否要设置？\n\n");
+	    do{  
+		printf("请回答 y or n(大小写皆可）\n");
+		scanf("%s",&question);
+		
+	    }while(question!='Y'&&question!='y'&&question!='N'&&question!='n');
+	    
+	    if(question=='y'||question=='Y'){
+		initial++;
+		printf("你还想要设置一个还是两个奖项？(可以输入1或者2): ");
+		scanf("%d",&OneOrTwo);
+	       if(OneOrTwo==1){
+		    printf("请输入你想要设置奖项的名字: ");
+		    scanf("%s",pri[num-1].Pfour);
+		    printf("%s",pri[num-1].Pfour);
+		    printf("请输入该奖项的人数：");
+		    scanf("%d",&pri[num-1].Nfour);
+	       }else{
+		    initial++;
+		    printf("请输入你想要设置奖项的第一个名字： ");
+		    scanf("%s",pri[num-1].Pfour);
+		    printf("请输入该奖项的人数：");
+		    scanf("%d",&pri[num-1].Nfour);
+		    printf("请输入你想要设置奖项的第二个名字： ");
+		    scanf("%s",pri[num-1].Pfive);
+		    printf("请输入该奖项的人数：");
+		    scanf("%d",&pri[num-1].Nfive);
+	       }
+	    }
+	    printf("你是否要设置该组奖项的一二三等奖的人数？(一等奖人数大于二等奖大于三等奖）\n\n ");
+	    do{  
+		     printf("请回答 y or n(大小写皆可）\n");
+		     scanf("%s",&question);
+		     
+	    }while(question!='Y'&&question!='y'&&question!='N'&&question!='n');//只要开头字母符合就行了
+	    if(question=='y'||question=='Y'){
+		printf("请输入一等奖人数：");
+		scanf("%d",&pri[num-1].None);
+		printf("二等奖人数为：");
+		scanf("%d",&pri[num-1].Ntwo);
+		printf("三等奖人数为：");
+		scanf("%d",&pri[num-1].Nthree);
+	    }
+
+	  
+
+
+
+    }else{
+	    printf("这里是对奖品个数和人员直接的分配。\n");
+	    printf("你正在设置第 %d 组的奖项数量和人员分配\n",num);
+	    //奖品个数
+	    printf("我们的奖品默认分为一等奖一名，二等奖两名，三等奖三名。\n");
+	    printf("除了一二三等奖以外，你还可以设置两个奖项名称，如若不设置则为默认。你是否要设置？\n\n");
+	    do{  
+		printf("请回答 y or n(大小写皆可）\n");
+		scanf("%s",&question);
+		
+	    }while(question!='Y'&&question!='y'&&question!='N'&&question!='n');
+	    
+	    if(question=='y'||question=='Y'){
+		initial++;
+		printf("你还想要设置一个还是两个奖项？(可以输入1或者2): ");
+		scanf("%d",&OneOrTwo);
+	       if(OneOrTwo==1){
+		    printf("请输入你想要设置奖项的名字: ");
+		    scanf("%s",pri[num-1].Pfour);
+		    printf("%s",pri[num-1].Pfour);
+		    printf("请输入该奖项的人数：");
+		    scanf("%d",&pri[num-1].Nfour);
+	       }else{
+		    initial++;
+		    printf("请输入你想要设置奖项的第一个名字： ");
+		    scanf("%s",pri[num-1].Pfour);
+		    printf("请输入该奖项的人数：");
+		    scanf("%d",&pri[num-1].Nfour);
+		    printf("请输入你想要设置奖项的第二个名字： ");
+		    scanf("%s",pri[num-1].Pfive);
+		    printf("请输入该奖项的人数：");
+		    scanf("%d",&pri[num-1].Nfive);
+	       }
+	    }
+	    printf("你是否要设置该组奖项的一二三等奖的人数？(一等奖人数大于二等奖大于三等奖）\n\n ");
+	    do{  
+		     printf("请回答 y or n(大小写皆可）\n");
+		     scanf("%s",&question);
+		     
+	    }while(question!='Y'&&question!='y'&&question!='N'&&question!='n');//只要开头字母符合就行了
+	    if(question=='y'||question=='Y'){
+		printf("请输入一等奖人数：");
+		scanf("%d",&pri[num-1].None);
+		printf("二等奖人数为：");
+		scanf("%d",&pri[num-1].Ntwo);
+		printf("三等奖人数为：");
+		scanf("%d",&pri[num-1].Nthree);
+	    }
+ }   
     printf("最后的奖项设置结果为：\n");
     switch(initial){
         case  0: 
@@ -455,7 +592,7 @@ void chooseNumber(Prize pri[],int num,int group[])
 }
 
 //该函数为默认设置奖项个数和人员分配
-void tacitiy(Prize pri[])
+void tacitiy()
 {
     printf("最后的奖项设置结果为：\n");
     printf("%s %s %d名, %s %d 名,%s %d名, \n",pri[0].Name,pri[0].Pone,pri[0].None,pri[0].Ptwo,pri[0].Ntwo,pri[0].Pthree,pri[0].Nthree);
@@ -471,83 +608,14 @@ void GetAllData(Student2 students[])
 	FILE *fp;
 	if((fp=fopen("data.txt","r"))==NULL){
 	 	printf("open failed\n");
-		fflush(stdout);
 		exit(1);
 	}	
-	char tmp[1000];
-	for(int i=0;i<1000;i++)tmp[i]='#';
-	//char num[numdataline][100];
-	for(int i=0;i<numdataline;i++){
-		for(int j=0;j<100;j++){
-			students[i].num[j]='#';
-		}
-	}
- 	//char name[numdataline][100]; 
-	for(int i=0;i<numdataline;i++){
-		for(int j=0;j<100;j++){
-			students[i].name[j]='#';
-		}
-	}
-	//char sex[numdataline][100]; 
-	for(int i=0;i<numdataline;i++){
-		for(int j=0;j<100;j++){
-			students[i].sex[j]='#';
-		}
-	}
-	//char nj[numdataline][100]; 
-	for(int i=0;i<numdataline;i++){
-		for(int j=0;j<100;j++){
-			students[i].nj[j]='#';
-		}
-	}
-	//char grjj[numdataline][1000];
-	for(int i=0;i<numdataline;i++){
-		for(int j=0;j<1000;j++){
-			students[i].grjj[j]='#';
-		}
-	}
-
-	int k=0;
-	int j=0;
+	
+	
 	for(int i=0; i<numdataline;i++){
-		fgets(tmp,500,fp);
-		
-		j=0;
-		k=0;
-		for(;tmp[j]!=' ';j++){	
-			students[i].num[k]=tmp[j];
-			k++;	
-		}
 
-		for(;tmp[j]==' ';j++){} //忽略空格
-		k=0;
-		for(;tmp[j]!=' ';j++){
-			students[i].name[k]=tmp[j];
-			k++;	
-		}
+		fscanf(fp,"%s %s %s %s %s",students[i].num,students[i].name,students[i].sex,students[i].nj,students[i].grjj);
 
-		for(;tmp[j]==' ';j++){} //忽略空格
-		k=0;
-		for(;tmp[j]!=' ';j++){		
-			students[i].sex[k]=tmp[j];	
-			k++;
-		}
-
-		for(;tmp[j]==' ';j++){} //忽略空格
-		k=0;
-		for(;tmp[j]!=' ';j++){			
-			students[i].nj[k]=tmp[j];
-			k++;	
-		}
-
-		for(;tmp[j]==' ';j++){} //忽略空格
-		k=0;
-		for(;tmp[j]!=' '&& tmp[j]!='\n';j++){
-			students[i].grjj[k]=tmp[j];
-			k++;	
-		}
-
-			
 	}
 
 	fclose(fp);
@@ -557,79 +625,63 @@ void Roll(Student2 students[])
 {
 	srand((unsigned int)time(NULL));
 
-	int a, b, count;
-
+	int b;
+	
 	for(int i=0;i<20;i++){
-		b=Rand(0, numdataline-1);
-		if(IsRoll==1){
-			for(a=0;students[b].num[a]!='#';a++){
-				printf("%c",students[b].num[a]);
-			
-				fflush(stdout);
-			}
-			printf(" ");
-			count=a+1;
 		
-			for(a=0;students[b].name[a]!='#';a++){
-				printf("%c",students[b].name[a]);
-				fflush(stdout);
-			}
-
-			count=count+a;
-
-
-			if(IsSex ==1){
-				printf(" ");
-				for(a=0;students[b].sex[a]!='#';a++){
-					printf("%c",students[b].sex[a]);
-					fflush(stdout);
-				}
-				count=count+a+1;
-			}
-			if(IsNj ==1){
-				printf(" ");
-				for(a=0;students[b].nj[a]!='#';a++){
-					printf("%c",students[b].nj[a]);
-					fflush(stdout);
-				}
-				count=count+a+1;
-			}
-
-
-			delay(ms);
-
-	    		for(int h=0;h<count;h++){
-	      		printf("\b");
-				printf(" ");
-				printf("\b");
-	   		 }		
-		}	
-	}
-
-		int j=0;
-		for(j=0;students[b].num[j]!='#';j++){
-			printf("%c",students[b].num[j]);
-			
-		}
+		do{  
+		   b=Rand(0, numdataline-1);
+	      }while(students[b].IsUsed==1);
+ 
+		printf("%s",students[b].num);	
+		fflush(stdout);
+		
 		printf(" ");
-  		for(j=0;students[b].name[j]!='#';j++){
-			printf("%c",students[b].name[j]);
-			
-		}
 		
-
-
+		printf("%s",students[b].name);
+		fflush(stdout);
+		
 		if(IsSex ==1){
 			printf(" ");
-			for(j=0;students[b].sex[j]!='#';j++){
-				printf("%c",students[b].sex[j]);
-			}
+			
+			printf("%s",students[b].sex);
+			fflush(stdout);		
 		}
 		if(IsNj ==1){
 			printf(" ");
-			for(j=0;students[b].nj[j]!='#';j++){
-				printf("%c",students[b].nj[j]);
-			}
+		
+			printf("%s",students[b].nj);
+			fflush(stdout);	
+		}
+
+
+		delay(ms);
+
+    		printf("\r");
+			for(int h=0;h<40;h++){   //不知道有多少个字符
+				printf(" ");
+	   		 }	
+		printf("\r");	
+		
+	}
+
+		students[b].IsUsed=1;
+		printf("%s",students[b].num);	
+		
+		printf(" ");
+  		
+		printf("%s",students[b].name);
+			
+		
+		if(IsSex ==1){
+			printf(" ");
+			printf("%s",students[b].sex);
+		
+		}
+		if(IsNj ==1){
+			printf(" ");
+			printf("%s",students[b].nj);
+			
 		}
 		printf("\n");
 
