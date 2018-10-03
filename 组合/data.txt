@@ -7,4 +7,3 @@
 7 good 女 17 g
 8 happy 男 19 h
 9 idea 女 17 i
-10 j 女 17 j

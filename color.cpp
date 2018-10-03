@@ -2,16 +2,16 @@
  
 int main(int argc,char **argv)
 {
-    	printf("\033[;30;5m ;30; hello world\033[0m\n");
-	printf("\033[;31;5m ;31; hello world\033[0m\n");
-	printf("\033[;32;5m ;32; hello world\033[0m\n");
-	printf("\033[;33;5m ;33; hello world\033[0m\n");
-	printf("\033[;34;5m ;34; hello world\033[0m\n");
-	printf("\033[;35;5m ;35; hello world\033[0m\n");
-	printf("\033[;36;5m ;36; hello world\033[0m\n");
-	printf("\033[;37;5m ;37; hello world\033[0m\n");
+    	printf("\033[;30m  hello world\033[0m\n");
+	printf("\033[;31m  hello world\033[0m\n");
+	printf("\033[;32m  hello world\033[0m\n");
+	printf("\033[;33m  hello world\033[0m\n");
+	printf("\033[;34m  hello world\033[0m\n");
+	printf("\033[;35m  hello world\033[0m\n");
+	printf("\033[;36m  hello world\033[0m\n");
+	printf("\033[;37m  hello world\033[0m\n");
 
-	printf("\033[40;37;5m 40;37; hello world\033[0m\n");
+	printf("\033[40;37;5m 40;37; hello world\033[0m\n");//5m为闪烁
 	printf("\033[41;37;5m 41;37; hello world\033[0m\n");
 	printf("\033[42;37;5m 42;37; hello world\033[0m\n");
 	printf("\033[43;37;5m 43;37; hello world\033[0m\n");
