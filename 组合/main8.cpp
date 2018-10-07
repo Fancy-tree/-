@@ -40,7 +40,7 @@ typedef struct
 }Prize;
 
 Prize pri;  
-int N = 3;
+int N = 3;//现有奖项数
 int TotalPrize = 6;
 
 int initial=0;//判断是否遵从初始设置
@@ -106,6 +106,7 @@ void SoftInformation();
 void Init();
 void Set();
 void PrintSet();
+void PrizeGiftSet();
 void RollSet();
 void ChooseWhatToRoll();
 void ChooseWhatResultToShow();
@@ -149,17 +150,16 @@ void Init()
 
 void SoftInformation()
 {
-    printf("\033[;30m*抽奖程序*\033[0m\n");
-    printf("\033[;30m程序自带默认设置（方便使用）\033[0m\n");
-    printf("\033[;30m>>>>即将显示 默认设置<<<< \033[0m\n");
-   
+    printf("*抽奖程序*\n");
+    printf(">>>>即将开始<<<< \n");
    printf("(回车继续)");
    fflush(stdout);
    string str;
    //cin.ignore(100,'\n');//不这么做getline就自动跳过了（cin.ignore(a,ch)如果计数值达到 a 或者被抛弃的字符是 ch ，则cin.ignore() 函数执行终止）
    //cin.sync();//清空缓冲区
    getline(cin,str);
-    
+
+    printf("程序自带默认设置（方便使用）\n");
     PrintSet();
 }
 
@@ -178,7 +178,7 @@ void PrintSet()
 	PrintRollSet();
 	
 	printf("*************************************************\n");
-	//printf("\33[u");
+	//printf("\33[u");	
 
 }
 
@@ -201,6 +201,7 @@ void Set()
           {
             printf("\033[;31m警告：当前各奖项分配人数总和(%d)已大于当前抽奖候选人数(%d)，建议继续录入候选人信息或者缩减奖项分配数量\033[0m\n",TotalPrize,CountLines(txt));
           }
+	  if(N==0)printf("\033[;31m警告：没有奖项！\033[0m\n");
         printf("请选择你的数字: ");
         std::cin>>n;
         while(strcmp (n,"1") && strcmp (n,"2") && strcmp (n,"3") && strcmp (n,"4") && strcmp (n,"5")  && strcmp (n,"0")){
@@ -269,6 +270,7 @@ void Set()
 		   		 fclose(fp);
 				//n=CountLines(txt);
 				//PrintStudents(stus,n);		
+				printf("\033[;32m抽奖人信息已添加\033[0m\n");
 			  	 
 			}else if(strcmp (s,"2")==0){   
 				n=CountLines(txt);
@@ -282,14 +284,14 @@ void Set()
 				if(fp==0)
 				    {
 					printf("can not open the file!\n");
-			 		    printf("当前没有候选人\n");
+			 		    printf("当前没有抽奖人\n");
 					//exit(1);
 				    }
 				    for(i=0;i<n;i++)
 				    {
 					fscanf(fp,"%d %s %s %d %s", &stus[i].num,stus[i].name,stus[i].sex,&stus[i].nj,stus[i].grjj);
 				    }
-					printf("当前候选人名单：\n");
+					printf("当前抽奖人名单：\n");
 				    for(i=0;i<n;i++)
 				    {
 					printf("**编号: %d ** ",i+1);
@@ -318,6 +320,7 @@ void Set()
 				 fclose(fp);
 				//n=CountLines(txt);
 				//PrintStudents(stus,n);		
+				printf("\033[;32m抽奖人信息已删除\033[0m\n");
 
 			}else if(strcmp (s,"3")==0){   
 			  	ofstream inFile;
@@ -327,7 +330,7 @@ void Set()
 
 				//n=CountLines(txt);
 				//PrintStudents(stus,n);		
-				printf("\033[;32m候选人信息已清空\033[0m\n");
+				printf("\033[;32m抽奖人信息已清空\033[0m\n");
 			}else if(strcmp (s,"0")==0){   
 			    break;
 				
@@ -345,7 +348,7 @@ void Set()
            // if(CountLines(txt) < TotalPrize) printf("警告：当前抽奖候选人数小于各奖项分配人数总和，建议继续录入候选人信息或者缩减奖项分配数量\n");
             
         }else if(strcmp (n,"2")==0){   //肖平 奖项设置函数
-            PrizeSet();//奖项设置函数
+             PrizeGiftSet();
         }else if(strcmp (n,"3")==0){   
             RollSet();
         }else if(strcmp (n,"4")==0){   
@@ -368,21 +371,196 @@ void PrintStudents(Student stus[],int n)
             if(fp==0)
             {
                 printf("can not open the file!\n");
- 		    printf("当前没有候选人\n");
+ 		    printf("当前没有抽奖人\n");
                 exit(1);
             }
             for(i=0;i<n;i++)
             {
                 fscanf(fp,"%d %s %s %d %s", &stus[i].num,stus[i].name,stus[i].sex,&stus[i].nj,stus[i].grjj);
             }
-		printf("\n\033[;36m当前候选人名单：\033[0m\n");
+		printf("\n\033[;36m当前抽奖人名单：\033[0m\n");
             for(i=0;i<n;i++)
             {
                 printf("学号:%d 姓名:%s 性别:%s 年级:%d 个人简介：%s\n", stus[i].num, stus[i].name, stus[i].sex, stus[i].nj, stus[i].grjj);  
             }
-		if(n==0)printf("当前没有候选人\n");
+		if(n==0)printf("当前没有抽奖人\n");
          fclose(fp);
 
+}
+
+void PrizeGiftSet()
+{
+    char n[50]="100";
+    while(n!=0){
+	  OutputInit();
+        printf("\033[;36m奖项奖品设置:\033[0m\n");
+        printf(" 1.改变抽奖标题\n");
+	  printf(" 2.改变现有奖项 名字 人数 奖品 顺序\n");
+        printf(" 3.增加奖项\n");
+        printf(" 4.减少奖项\n");
+        printf(" 0.退出\n");
+	 
+
+        printf("请选择你的数字: ");
+        std::cin>>n;
+        while(strcmp (n,"1") && strcmp (n,"2") && strcmp (n,"3") && strcmp (n,"4") && strcmp (n,"0")){
+            printf("无效字符, 再试一次 ");
+            std::cin>>n;
+          }
+        printf("OK\n");
+        if(strcmp (n,"1")==0){
+            	printf("请输入抽奖项目标题: （例：新年赢大奖啦啦啦）\n");
+    			scanf("%s", pri.Name);
+			printf("\033[;32m标题已更改\033[0m\n");
+        }else if(strcmp (n,"2")==0){   
+			string str1,str2;
+          		for(int i=0;i<N;i++){
+				printf("**编号: %d ** ",i+1);
+				printf("%s %d名  奖品:%s \n",pri.sp[i].name, pri.sp[i].num,pri.sp[i].gift);
+			}
+			if(N==0)printf("没有奖项！\n");
+			 printf("请输入要改变的一个奖项编号(输0退出)\n");
+			 while(1)
+   			 {
+        			cin>>str1;
+        			if(IsNum(str1)){
+					if(StrToNum(str1)>=0 && StrToNum(str1)<=N) break;//
+					else printf("没有这个编号，再试一次 \n");
+       			 }else{
+            			 printf("没有这个编号，再试一次 \n");
+      				 }
+		  	  }
+			 int chooseNum=StrToNum(str1)-1;
+			if(chooseNum+1==0)continue;
+				    char s[50]="100";
+				    while(n!=0){
+					printf("\n\033[;36m奖项一览\033[0m\n",chooseNum);
+					for(int i=0;i<N;i++){
+						printf("**编号: %d ** ",i+1);
+						printf("%s %d名  奖品:%s \n",pri.sp[i].name, pri.sp[i].num,pri.sp[i].gift);
+					}
+					printf("\033[;36m**编号: %d **  奖项改动\033[0m\n",chooseNum+1);
+					printf(" 1.改变奖项 名称\n");
+					printf(" 2.改变奖项 人数\n"); 
+					printf(" 3.改变奖项 奖品\n");
+					printf(" 4.改变奖项 顺序\n");
+					printf(" 0.退出\n");
+					printf("\033[;31m提示：奖项顺序与抽奖顺序一致\033[0m\n");
+					printf("请选择你的数字: ");
+					std::cin>>s;
+					while(strcmp (s,"1") && strcmp (s,"2") && strcmp (s,"3") && strcmp (s,"4")  && strcmp (s,"0")){
+					    printf("无效字符, 再试一次 ");
+					    std::cin>>s;
+					  }
+					printf("OK\n");
+					if(strcmp (s,"1")==0){
+					   	 printf("请输入 奖项 名称：\n");
+       					 scanf("%s", pri.sp[chooseNum].name);
+					}else if(strcmp (s,"2")==0){   
+					    	 printf("请输入 奖项 人数：\n");
+						while(1)
+        					{
+         					   cin>>str2;
+           					   if(IsNum(str2)){
+           					     break;
+           					   }else{
+             				 	printf("非法输入，请输入数字: \n");
+         					    }
+       						}
+						TotalPrize += (StrToNum(str2)-pri.sp[chooseNum].num);
+					      pri.sp[chooseNum].num = StrToNum(str2);
+						
+
+					}else if(strcmp (s,"3")==0){   
+					   	 printf("请输入 奖项 奖品：\n");
+       					 scanf("%s", pri.sp[chooseNum].gift);
+				
+					}else if(strcmp (s,"4")==0){   
+					   	string str3;
+						int i;
+          					for(i=0;i<N;i++){
+							printf("**编号: %d ** \n",i+1);
+							printf("%s %d名  奖品:%s \n",pri.sp[i].name, pri.sp[i].num,pri.sp[i].gift);
+						}
+						printf("**编号: %d ** \n",i+1);
+						if(N==0)printf("没有奖项！\n");
+						printf("请选择该奖项的位置(输0退出)\n");
+			 			while(1)
+   			 			{
+        						cin>>str3;
+        						if(IsNum(str3)){
+								if(StrToNum(str3)>=0 && StrToNum(str3)<=N+1) break;//
+								else printf("没有这个编号，再试一次 \n");
+       			 				}else{
+            							printf("没有这个编号，再试一次 \n");
+      				 				}
+		  	  			}
+			 			int chooseNum2=StrToNum(str3);
+						if(chooseNum2==0)continue;
+						chooseNum2=chooseNum2-1;
+
+						Prize tmp;
+						tmp.sp = new Single[1];
+						tmp.sp[0]=pri.sp[chooseNum];
+						for(int i=N;i>chooseNum2;i--){
+							pri.sp[i]=pri.sp[i-1];			
+						}
+						pri.sp[chooseNum2]=tmp.sp[0];
+						for(int i=chooseNum;i<N;i++){
+							pri.sp[i]=pri.sp[i+1];			
+						}
+						//chooseNum=chooseNum2-1;
+						break;
+					}
+					printf("\033[;32m该奖项已更改\033[0m\n");
+				}
+				    
+		printf("\033[;32m该奖项已更改\033[0m\n");
+            
+        }else if(strcmp (n,"3")==0){   
+           	ChangePri();
+             printf("\033[;32m奖项已添加\033[0m\n");
+        }else if(strcmp (n,"4")==0){   
+			string str1;
+          		for(int i=0;i<N;i++){
+				printf("**编号: %d ** ",i+1);
+				printf("%s %d名  奖品:%s \n",pri.sp[i].name, pri.sp[i].num,pri.sp[i].gift);
+			}
+			if(N==0)printf("没有奖项！\n");
+			 printf("请输入要删除的一个奖项编号(输0退出)\n");
+			 while(1)
+   			 {
+        			cin>>str1;
+        			if(IsNum(str1)){
+					if(StrToNum(str1)>=0 && StrToNum(str1)<=N) break;//
+					else printf("没有这个编号，再试一次 \n");
+       			 }else{
+            			 printf("没有这个编号，再试一次 \n");
+      				 }
+		  	  }
+			 int chooseNum=StrToNum(str1);
+			if(chooseNum==0)continue;
+			TotalPrize = TotalPrize-pri.sp[chooseNum-1].num;
+
+			N=N-1;
+			for(int i=chooseNum-1;i<N;i++){
+					//strcpy(pri[i].name,pri[i+1].name);
+					//strcpy(pri[i].gift,pri[i+1].gift);
+					
+					pri.sp[i]=pri.sp[i+1];
+					
+			}
+			printf("\033[;32m奖项已删除\033[0m\n");
+            
+        }else if(strcmp (n,"0")==0){  
+		 OutputInit();
+            break;
+                
+        }else {   
+            printf("\033[;32m无效字符?\033[0m\n");
+        }
+        
+    }  
 }
 
 
@@ -766,35 +944,15 @@ void PrizeSet()
     }
 }
 
-//这个函数用于修改默认的抽奖信息设置
+
 void ChangePri()
 {
-    string str1, str2;
-    int i;
-    
-
-    TotalPrize = 0;
-    printf("请输入抽奖项目标题: （例：新年赢大奖啦啦啦）\n");
-    scanf("%s", pri.Name);
-    printf("请输入奖项数量: （例：一等奖 二等奖 三等奖 ，本例奖项数量共三个）\n");
-    while(1)
-    {
-        cin>>str1;
-        if(IsNum(str1)){
-            break;
-        }else{
-             printf("非法输入，请输入数字: \n");
-        }
-    }
-
-    N = StrToNum(str1);
-    char txt[]="data.txt";
-    
-    for(i=0; i<N; i++)
-    {
-        printf("请输入第%d个奖项的名称：\n", i+1);
-        scanf("%s", pri.sp[i].name);
-        printf("请输入给%s分配的获奖人数：\n", pri.sp[i].name);
+    string str2;
+ 
+	
+	  printf("请输入新奖项的名称：\n");
+        scanf("%s", pri.sp[N].name);
+        printf("请输入给%s分配的获奖人数：\n", pri.sp[N].name);
         while(1)
         {
             cin>>str2;
@@ -804,18 +962,13 @@ void ChangePri()
                 printf("非法输入，请输入数字: \n");
             }
         }
-        pri.sp[i].num = StrToNum(str2);
+        pri.sp[N].num = StrToNum(str2);
 
-	  printf("请输入第%d个奖项的奖品：\n", i+1);
-        scanf("%s", pri.sp[i].gift);
-
-        TotalPrize += pri.sp[i].num;
-     
-    }
-
-   // printf("\033[;36m最终的抽奖设置信息如下——\033[0m\n");
- 	 OutputInit();
-  // if(CountLines(txt) < TotalPrize)  printf("警告：当各奖项分配人数总和已大于前抽奖候选人数，建议继续录入候选人信息或者缩减奖项分配数量\n");
+	  printf("请输入新奖项的奖品：\n");
+        scanf("%s", pri.sp[N].gift);
+	
+      TotalPrize += pri.sp[N].num;
+	N=N+1;
    
 }
 
@@ -831,6 +984,7 @@ void OutputInit()
 	printf("%s %d名  奖品:%s \n",pri.sp[i].name, pri.sp[i].num,pri.sp[i].gift);
      }
    //printf("\n");
+	if(N==0)printf("没有奖项！\n");
 }
 
 bool IsNum(string str)
@@ -906,11 +1060,13 @@ void Roll(Student2 students[])
                  }
 		    
 		 delay(ms);
-	       printf("\r");
-		 for(int h=0;h<40;h++){   //不知道有多少个字符
+	       
+		 for(int h=0;h<40;h++){
+                        printf("\b");//不知道有多少个字符
 		        printf(" ");
+                         printf("\b");//不知道有多少个字符
 		 }
-		 printf("\r");
+		
          }
   
     }
