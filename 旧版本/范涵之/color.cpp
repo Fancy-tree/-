@@ -6,7 +6,7 @@ int main(int argc,char **argv)
 	printf("\033[;31m  hello world\033[0m\n");
 	printf("\033[;32m  hello world\033[0m\n");
 	printf("\033[;33m  hello world\033[0m\n");
-	printf("\033[;34m  hello world\033[0m\n");
+	printf("\033[;34m  hello world\033[0m\n");//1m高亮printf("\33[1;34m%s\033[0m\n",pri.sp[i].name);
 	printf("\033[;35m  hello world\033[0m\n");
 	printf("\033[;36m  hello world\033[0m\n");
 	printf("\033[;37m  hello world\033[0m\n");

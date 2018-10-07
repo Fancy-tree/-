@@ -1,7 +1,16 @@
+//分配任务：完成抽奖函数，完成历史记录统计
+
+//完成任务：
+//1.读取 抽奖人信息文件，随机抽奖，输出结果
+//但不能通过编译
+
+
+
 #include<iostream>
 #include<fstream>
 #include<string.h>
 //#include<conio.h>
+
 using namespace std;
 
 struct Person
@@ -23,7 +32,7 @@ void shuru()//将文件的数据读入到结构体数组中
 	int count=0;
 	while(infile.get(ch))//把文件中的数据进行分块（依据空格分隔）
 	{
-		if(ch=='')count++;
+		if(ch==‘’)count++;
 		if(count%3==1)
 		p[count/3].name+=ch;
 		if(count%3==2)
@@ -35,7 +44,7 @@ void shuru()//将文件的数据读入到结构体数组中
 	infile.close();
 }
 
-void shuchu()//
+void shuchu()
 {
 	char c;
 	string s;
