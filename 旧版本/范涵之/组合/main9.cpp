@@ -160,8 +160,8 @@ void Init()//需要提前初始化的一切
 void SoftInformation()//软件介绍
 {
     printf("*抽奖程序*\n");
-    printf(">>>>即将开始<<<< \n");
-   printf("(回车继续)");
+    printf("如在使用过程中需要帮助，请参考README(帮助手册) \n");
+   printf("(回车开始)");
    fflush(stdout);
    string str;
    //cin.ignore(100,'\n');//不这么做getline就自动跳过了（cin.ignore(a,ch)如果计数值达到 a 或者被抛弃的字符是 ch ，则cin.ignore() 函数执行终止）
@@ -252,9 +252,9 @@ void StudentsSet()//张海军 输入抽奖人信息函数
 			n=CountLines(txt);
 			PrintStudents(stus,n);			
 			printf("\033[;36m抽奖人信息设置:\033[0m\n");
-			printf(" 1.添加抽奖人信息\n");
-			printf(" 2.删除抽奖人信息\n");
-			printf(" 3.清空抽奖人信息\n");
+			printf(" 1.添加 抽奖人信息\n");
+			printf(" 2.删除 抽奖人信息\n");
+			printf(" 3.清空 抽奖人信息\n");
 			printf(" 0.退出\n");
 			printf("请选择你的数字: ");
 				
@@ -277,7 +277,7 @@ void StudentsSet()//张海军 输入抽奖人信息函数
 		  		  int err=0;
 		   		 for(i=0;i<n;i++)
 		  		  {
-		      		  printf("请依次输入第%d个学生的学号.姓名.性别.年级.个人简介:\n",i+1);
+		      		  printf("请依次输入第%d个学生的学号 姓名 性别 年级 个人简介:\n",i+1);
 					  if((cin>>stus[i].num>>stus[i].name>>stus[i].sex>>stus[i].nj>>stus[i].grjj)==0){
 						printf("\033[;31m非法输入！(学号，年级只能是数字)\033[0m\n");
 						cin.sync();//清空缓冲区
@@ -811,7 +811,7 @@ void ChooseWhatResultToShow()//抽奖结果显示格式设置
         }else if(strcmp (n,"6")==0){   
             if(IsShowGrjj == 0)printf("\033[;32m学生个人简介 已取消\033[0m\n");
             else {
-                IsShowGrjj = 0;
+                IsShowGrjj = 0;学号.姓名.性别.年级.个人简介
                 printf("\033[;32m学生个人简介 将取消\033[0m\n");
            	}
             
@@ -854,8 +854,8 @@ void Search()
     char n[50]="100";
     while(1){
         printf("\033[;36m记录查询:\033[0m\n");
-        printf(" 1.显示抽奖历史记录\n");
-        printf(" 2.清空抽奖历史记录\n");
+        printf(" 1.显示 抽奖历史记录\n");
+        printf(" 2.清空 抽奖历史记录\n");
         printf(" 0.退出\n");
         printf("请选择你的数字: ");
         std::cin>>n;
